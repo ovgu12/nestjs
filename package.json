@@ -1,0 +1,20 @@
+{
+  "name": "cgm-nestjs-app",
+  "version": "1.0.0",
+  "description": "Use nestjs with angular in a monorepo setup",
+  "main": "index.js",
+  "author": "Hoang Vu <hoangvuminh@hotmail.de>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "start": "lerna run start --scope backend",
+    "cleanup": "lerna clean --yes && rm -rf ./node_modules",
+    "lerna": "lerna"
+  },
+  "devDependencies": {
+    "lerna": "^3.20.2"
+  }
+}

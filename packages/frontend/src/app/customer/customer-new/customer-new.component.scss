@@ -1,0 +1,24 @@
+.customer-form {
+    position: relative;
+    padding: .5rem;
+
+    &__close {
+        position: absolute;
+        right: -1rem;
+        top: -1rem;
+        z-index: 999;
+    }
+
+    &__actions {
+        display: flex;
+        justify-content: flex-end;
+        
+        button + button {
+            margin-left: .3rem;
+        }
+    }
+
+    .mat-form-field {
+        width: 100%;
+    }    
+}
