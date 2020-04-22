@@ -6,6 +6,12 @@ import { CreateCustomerDTO } from './dto/create-customer.dto';
 export class CustomerController {
     constructor(private customerService: CustomerService) { }
 
+    @Get('/search')
+    async searchCustomers(@Res() res, @Query('query') query) {
+        const customers = await this.customerService.searchCustomers(query);
+        return res.status(HttpStatus.OK).json(customers);
+    }
+
     @Get('/getByEmail')
     async getCustomerByEmail(@Res() res, @Query('email') email) {
         const customer = await this.customerService.getCustomerByEmail(email);

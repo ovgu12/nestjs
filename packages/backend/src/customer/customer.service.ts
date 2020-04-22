@@ -10,6 +10,18 @@ export class CustomerService {
     constructor(@InjectModel('Customer') private readonly customerModel: Model<Customer>) { }
     
     /**
+     * Searchs customers for given query
+     *
+     * @param query
+     */
+    async searchCustomers(query: string): Promise<Customer[]> {
+        const customers = await this.customerModel.find({
+            $text: { $search: query }
+        }).exec();
+        return customers;
+    }
+
+    /**
      * Gets all customers data
      */
     async getAllCustomer(): Promise<Customer[]> {

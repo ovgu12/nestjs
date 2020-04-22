@@ -10,6 +10,15 @@
         text-align: center;
         width: 10rem;
       }
+
+      & + .mat-card {
+        border-radius: 0;
+        color: rgba(0,0,0,0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 2.5rem;
+      }
     }
   }
   

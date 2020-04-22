@@ -29,6 +29,11 @@ export class CustomerService {
     return this.httpClient.delete<any>('/api/v1/customer/' + customerId);
   }
 
+  search(query: string) {
+    const params = {query};
+    return this.httpClient.get<any>('/api/v1/customer/search', {params});
+  }
+
   getByEmail(email: string) {
     const params = {email};
     return this.httpClient.get<any>('/api/v1/customer/getByEmail', {params});

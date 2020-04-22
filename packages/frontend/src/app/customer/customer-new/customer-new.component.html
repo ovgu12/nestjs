@@ -1,5 +1,5 @@
 <div class="customer-form">
-  <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="customerForm">
     <mat-form-field>
       <mat-label>First Name</mat-label>
       <input matInput [errorStateMatcher]="errorMatcher"  placeholder="John" formControlName="firstName">
@@ -32,7 +32,7 @@
 
     <div class="customer-form__actions">
       <button *ngIf="isDialog()" mat-raised-button (click)="closeDialog()" color="warn">Cancel</button>
-      <button type="submit" mat-raised-button color="primary" [disabled]="!customerForm.valid">
+      <button (click)="onSubmit()" mat-raised-button color="primary" [disabled]="!customerForm.valid">
         <span *ngIf="isEditMode(); else createButtonText">Save</span>
         <ng-template #createButtonText><span>New</span></ng-template>
       </button>
