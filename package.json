@@ -12,7 +12,7 @@
   "scripts": {
     "test":  "lerna run test --scope backend",
     "build":  "lerna run build",
-    "start":  "lerna run start --scope backend",
+    "start":  "node ./packages/backend/dist/main",
     "cleanup": "lerna clean --yes && rm -rf ./node_modules",
     "lerna": "lerna"
   },
