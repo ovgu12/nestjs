@@ -10,7 +10,9 @@
     "packages/*"
   ],
   "scripts": {
-    "start": "lerna run start --scope backend",
+    "test":  "lerna run test --scope backend",
+    "build":  "lerna run build",
+    "start":  "lerna run start --scope backend",
     "cleanup": "lerna clean --yes && rm -rf ./node_modules",
     "lerna": "lerna"
   },

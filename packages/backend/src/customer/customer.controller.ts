@@ -7,7 +7,7 @@ export class CustomerController {
     constructor(private customerService: CustomerService) { }
 
     @Get('/getByEmail')
-    async findCustomerByEmail(@Res() res, @Query('email') email) {
+    async getCustomerByEmail(@Res() res, @Query('email') email) {
         const customer = await this.customerService.getCustomerByEmail(email);
         return res.status(HttpStatus.OK).json(customer);
     }
