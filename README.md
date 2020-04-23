@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ovgu12/nestjs-demo-app.svg?branch=master)](https://travis-ci.org/ovgu12/nestjs-demo-app)
+
 # Install
 From root folder
 - `yarn install` to install packages
