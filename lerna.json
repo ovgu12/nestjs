@@ -1,10 +1,9 @@
-
 {
-    "packages": [
-      "packages/*"
-    ],
-    "version": "independent",
-    "npmClient": "yarn",
-    "stream": true,
-    "useWorkspaces": true
-  }
+  "packages": [
+    "packages/*"
+  ],
+  "version": "independent",
+  "npmClient": "yarn",
+  "stream": true,
+  "useWorkspaces": true
+}

@@ -5,6 +5,18 @@
     table {
       width: 100%;
 
+      .mat-column-firstName {
+        width: 30%;
+      }
+
+      .mat-column-lastName {
+        width: 30%;
+      }
+
+      .mat-column-email {
+        width: 25%;
+      }
+
       .mat-column-actions {
         text-align: center;
         width: 10rem;
