@@ -3,12 +3,18 @@
 </div>
 
 <div class="customer-list__filter">
-  <mat-form-field>
-    <mat-label>Search</mat-label>
-    <input matInput placeholder="John" #searchInput>
-    <mat-hint align="start"><strong>Min characters 2</strong></mat-hint>
-    <mat-hint align="end">{{searchInput.value.length}} / 100</mat-hint>
-  </mat-form-field>
+  <form [formGroup]="search">
+    <mat-form-field>
+      <mat-label>Search</mat-label>
+      <input #searchInput matInput [errorStateMatcher]="errorMatcher" placeholder="John" formControlName="searchInput">
+      <button mat-button *ngIf="search.get('searchInput').value" 
+              matSuffix mat-icon-button (click)="resetSearch()">
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-hint align="start"><strong>Min characters 2</strong></mat-hint>
+      <mat-hint align="end">{{search.get('searchInput').value.length}} / 100</mat-hint>
+    </mat-form-field>
+  </form>
 </div>
 
 <div class="customer-list__table">

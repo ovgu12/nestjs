@@ -1,8 +1,13 @@
 # Install
-From root
-- `yarn install` to install all packages
-- `yarn build` to build all packages
-- `yarn start` to trigger backend and open http://localhost:3000 or https://cgm-demo-app.herokuapp.com/
+From root folder
+- `yarn install` to install packages
+- `yarn build` to build packages
+- `yarn start` to start backend http://localhost:3000
+- `yarn serve` to serve frontend http.//localhost:4200
+
+# Deploy
+Repo will currently be deployed to https://cgm-demo-app.herokuapp.com/
+
 # TODO
-- [ ] Frontend node_modules is not hoisted
-- [ ] Test fix
+- [ ] Tests are not working
+- [ ] Frontend package is not hoisted

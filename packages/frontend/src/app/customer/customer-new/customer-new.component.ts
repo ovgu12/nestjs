@@ -1,24 +1,15 @@
 import { Inject, Component, OnInit, Optional } from '@angular/core';
-import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors, FormGroupDirective, NgForm } from '@angular/forms';
+import { FormGroup, FormControl, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import {ErrorStateMatcher} from '@angular/material/core';
 
 import { CustomerService } from '../customer.service';
-import { Customer } from '../models/customer';
+import { Customer } from '../models/customer.interface';
 import { Observable } from 'rxjs';
 import { debounceTime, map, distinctUntilChanged, switchMap, first } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
-
-/** Error when invalid control is dirty, touched, or submitted. */
-export class CustomerErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
+import { AppErrorStateMatcher } from '../../common/app-error-state-matcher';
 
 @Component({
   selector: 'app-customer-new',
@@ -28,20 +19,19 @@ export class CustomerErrorStateMatcher implements ErrorStateMatcher {
 export class CustomerNewComponent implements OnInit {
 
   customerForm: FormGroup;
-
   customer: Customer;
   customerId: string;
 
   loading = true;
   sending = false;
 
-  errorMatcher = new CustomerErrorStateMatcher();
+  errorMatcher = new AppErrorStateMatcher();
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    public customerService: CustomerService,
     private snackBar: MatSnackBar,
+    public customerService: CustomerService,
     @Optional() public dialogRef: MatDialogRef<any>,
     @Optional() @Inject(MAT_DIALOG_DATA) public dialogData: any) { }
 
@@ -54,7 +44,7 @@ export class CustomerNewComponent implements OnInit {
         email: new FormControl(
           '',
           [Validators.required, Validators.email],
-          this.validateEmail.bind(this)
+          this.validateEmailIsTaken.bind(this)
         ),
       }
     );
@@ -83,17 +73,16 @@ export class CustomerNewComponent implements OnInit {
 
   onSubmit() {
     if (this.customerForm.valid && this.sending === false) {
-      this.sending = true;
       const customer: Customer = {
         firstName: this.customerForm.get('firstName').value,
         lastName: this.customerForm.get('lastName').value,
         email: this.customerForm.get('email').value,
       };
 
-      if (!this.customerId) {
-        this.addCustomer(customer);
-      } else {
+      if (this.isEditMode()) {
         this.updateCustomer(this.customerId, customer);
+      } else {
+        this.addCustomer(customer);
       }
     }
   }
@@ -114,6 +103,7 @@ export class CustomerNewComponent implements OnInit {
   }
 
   addCustomer(cus: Customer) {
+    this.sending = true;
     this.customerService.add(cus).subscribe(res => {
       this.sending = false;
       this.closeDialog(res);
@@ -122,6 +112,7 @@ export class CustomerNewComponent implements OnInit {
   }
 
   updateCustomer(customerId: string, customer: Customer) {
+    this.sending = true;
     this.customerService.update(customerId, customer).subscribe(res => {
       this.sending = false;
       this.closeDialog(res);
@@ -129,7 +120,7 @@ export class CustomerNewComponent implements OnInit {
     });
   }
 
-  validateEmail(ctl: AbstractControl): Observable <ValidationErrors | null> {
+  validateEmailIsTaken(ctl: AbstractControl): Observable <ValidationErrors | null> {
     return ctl.valueChanges.pipe(
       debounceTime(500),
       distinctUntilChanged(),

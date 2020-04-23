@@ -1,10 +1,12 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { CustomerNewComponent } from '../customer-new/customer-new.component';
 import { CustomerService } from '../customer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { fromEvent } from 'rxjs';
-import { map, debounceTime, distinctUntilChanged, switchMap, filter } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, switchMap, map } from 'rxjs/operators';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AppErrorStateMatcher } from '../../common/app-error-state-matcher';
+import { of, fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-customer-list',
@@ -13,13 +15,14 @@ import { map, debounceTime, distinctUntilChanged, switchMap, filter } from 'rxjs
 })
 export class CustomerListComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('searchInput')
-  searchInput: ElementRef;
-
+  search: FormGroup;
   tableColumns: string[] = ['firstName', 'lastName', 'email', 'actions'];
   customers = [];
 
   isLoading = true;
+  errorMatcher = new AppErrorStateMatcher();
+
+  @ViewChild('searchInput') searchInput: ElementRef;
 
   constructor(
     private snackBar: MatSnackBar,
@@ -28,6 +31,10 @@ export class CustomerListComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
+    this.search = new FormGroup({
+      searchInput: new FormControl('', [Validators.minLength(2), Validators.maxLength(100)])
+    });
+
     this.listCustomers();
   }
 
@@ -35,16 +42,29 @@ export class CustomerListComponent implements OnInit, AfterViewInit {
     this.initSearch();
   }
 
+  resetSearch() {
+    this.search.patchValue({
+      searchInput: ''
+    });
+    this.listCustomers();
+  }
+
   initSearch() {
-    fromEvent<any>(this.searchInput.nativeElement, 'keyup')
-    .pipe(
+    fromEvent(this.searchInput.nativeElement, 'keyup').pipe(
       debounceTime(500),
       distinctUntilChanged(),
-      map(event => event.target.value),
-      filter(query => query?.length > 1 && query?.length < 101),
+      map((e: any) => e.target.value),
       switchMap(val => {
         this.isLoading = true;
-        return this.customerService.search(val);
+        if (this.search.valid) {
+          if (val) {
+            return this.customerService.search(val);
+          } else {
+            return this.customerService.list();
+          }
+        } else {
+          return of(this.customers);
+        }
       })
     ).subscribe(res => {
       this.customers = res;
@@ -62,7 +82,7 @@ export class CustomerListComponent implements OnInit, AfterViewInit {
 
   deleteCustomer(customerId: string) {
     this.customerService.delete(customerId).subscribe(res => {
-      this.listCustomers();
+      this.resetSearch();
       this.openSnackBar('Customer is succesfully deleted', 'x');
     });
   }
@@ -74,7 +94,7 @@ export class CustomerListComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.listCustomers();
+        this.resetSearch();
       }
     });
   }

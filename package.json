@@ -10,11 +10,16 @@
     "packages/*"
   ],
   "scripts": {
-    "test":  "lerna run test --scope backend",
-    "build":  "lerna run build",
-    "start":  "node ./packages/backend/dist/main",
+    "test": "lerna run test --scope backend",
+    "lint": "lerna run lint",
+    "build": "lerna run build",
+    "start": "node ./packages/backend/dist/main",
+    "serve": "lerna run start --scope frontend",
     "cleanup": "lerna clean --yes && rm -rf ./node_modules",
     "lerna": "lerna"
+  },
+  "engines": {
+    "node": ">=12.13.0"
   },
   "devDependencies": {
     "lerna": "^3.20.2"
