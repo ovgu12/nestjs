@@ -15,7 +15,7 @@ describe('Customer Controller', () => {
           provide: getModelToken('Customer'),
           useValue: {},
         },
-      ]
+      ],
     }).compile();
 
     controller = module.get<CustomerController>(CustomerController);

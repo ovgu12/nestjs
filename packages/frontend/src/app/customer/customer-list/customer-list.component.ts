@@ -1,9 +1,20 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CustomerNewComponent } from '../customer-new/customer-new.component';
 import { CustomerService } from '../customer.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { debounceTime, distinctUntilChanged, switchMap, map } from 'rxjs/operators';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  switchMap,
+  map,
+} from 'rxjs/operators';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AppErrorStateMatcher } from '../../common/app-error-state-matcher';
 import { of, fromEvent } from 'rxjs';
@@ -11,10 +22,9 @@ import { of, fromEvent } from 'rxjs';
 @Component({
   selector: 'app-customer-list',
   templateUrl: './customer-list.component.html',
-  styleUrls: ['./customer-list.component.scss']
+  styleUrls: ['./customer-list.component.scss'],
 })
 export class CustomerListComponent implements OnInit, AfterViewInit {
-
   search: FormGroup;
   tableColumns: string[] = ['firstName', 'lastName', 'email', 'actions'];
   customers = [];
@@ -27,12 +37,15 @@ export class CustomerListComponent implements OnInit, AfterViewInit {
   constructor(
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
-    private customerService: CustomerService
-  ) { }
+    private customerService: CustomerService,
+  ) {}
 
   ngOnInit(): void {
     this.search = new FormGroup({
-      searchInput: new FormControl('', [Validators.minLength(2), Validators.maxLength(100)])
+      searchInput: new FormControl('', [
+        Validators.minLength(2),
+        Validators.maxLength(100),
+      ]),
     });
 
     this.listCustomers();
@@ -44,32 +57,34 @@ export class CustomerListComponent implements OnInit, AfterViewInit {
 
   resetSearch() {
     this.search.patchValue({
-      searchInput: ''
+      searchInput: '',
     });
     this.listCustomers();
   }
 
   initSearch() {
-    fromEvent(this.searchInput.nativeElement, 'keyup').pipe(
-      debounceTime(500),
-      distinctUntilChanged(),
-      map((e: any) => e.target.value),
-      switchMap(val => {
-        this.isLoading = true;
-        if (this.search.valid) {
-          if (val) {
-            return this.customerService.search(val);
+    fromEvent(this.searchInput.nativeElement, 'keyup')
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        map((e: any) => e.target.value),
+        switchMap(val => {
+          this.isLoading = true;
+          if (this.search.valid) {
+            if (val) {
+              return this.customerService.search(val);
+            } else {
+              return this.customerService.list();
+            }
           } else {
-            return this.customerService.list();
+            return of(this.customers);
           }
-        } else {
-          return of(this.customers);
-        }
-      })
-    ).subscribe(res => {
-      this.customers = res;
-      this.isLoading = false;
-    });
+        }),
+      )
+      .subscribe(res => {
+        this.customers = res;
+        this.isLoading = false;
+      });
   }
 
   listCustomers() {
@@ -104,5 +119,4 @@ export class CustomerListComponent implements OnInit, AfterViewInit {
       duration: 2000,
     });
   }
-
 }

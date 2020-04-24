@@ -8,9 +8,8 @@ xdescribe('CustomerNewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CustomerNewComponent ]
-    })
-    .compileComponents();
+      declarations: [CustomerNewComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

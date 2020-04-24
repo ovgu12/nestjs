@@ -8,7 +8,6 @@ import { CustomerListComponent } from './customer-list/customer-list.component';
 import { CustomerNewComponent } from './customer-new/customer-new.component';
 import { MaterialModule } from '../material/material.module';
 
-
 @NgModule({
   declarations: [CustomerListComponent, CustomerNewComponent],
   imports: [
@@ -17,6 +16,6 @@ import { MaterialModule } from '../material/material.module';
     ReactiveFormsModule,
     CustomerRoutingModule,
     MaterialModule,
-  ]
+  ],
 })
-export class CustomerModule { }
+export class CustomerModule {}

@@ -1,5 +1,5 @@
 {
-  "name": "cgm-nestjs-app",
+  "name": "nestjs-demo-app",
   "version": "1.0.0",
   "description": "Use nestjs with angular in a monorepo setup",
   "main": "index.js",
@@ -16,6 +16,7 @@
     "start": "node ./packages/backend/dist/main",
     "serve": "lerna run start --scope frontend",
     "cleanup": "lerna clean --yes && rm -rf ./node_modules",
+    "format": "lerna run format",
     "lerna": "lerna"
   },
   "engines": {

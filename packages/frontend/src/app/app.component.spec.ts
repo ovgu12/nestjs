@@ -6,13 +6,8 @@ import { MaterialModule } from './material/material.module';
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        MaterialModule,
-      ],
-      declarations: [
-        AppComponent
-      ],
+      imports: [RouterTestingModule, MaterialModule],
+      declarations: [AppComponent],
     }).compileComponents();
   }));
 

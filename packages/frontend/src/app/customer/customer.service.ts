@@ -3,11 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Customer } from './models/customer.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CustomerService {
-
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   list() {
     return this.httpClient.get<Customer[]>('/api/v1/customer');
@@ -22,7 +21,10 @@ export class CustomerService {
   }
 
   update(customerId: string, customer: Customer) {
-    return this.httpClient.put<Customer>('/api/v1/customer/' + customerId, customer);
+    return this.httpClient.put<Customer>(
+      '/api/v1/customer/' + customerId,
+      customer,
+    );
   }
 
   delete(customerId: string) {
@@ -30,12 +32,12 @@ export class CustomerService {
   }
 
   search(query: string) {
-    const params = {query};
-    return this.httpClient.get<any>('/api/v1/customer/search', {params});
+    const params = { query };
+    return this.httpClient.get<any>('/api/v1/customer/search', { params });
   }
 
   getByEmail(email: string) {
-    const params = {email};
-    return this.httpClient.get<any>('/api/v1/customer/getByEmail', {params});
+    const params = { email };
+    return this.httpClient.get<any>('/api/v1/customer/getByEmail', { params });
   }
 }
