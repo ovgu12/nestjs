@@ -130,6 +130,7 @@ export class CustomerNewComponent implements OnInit {
         this.openSnackBar('Customer is succesfully added', 'x');
       },
       err => {
+        this.sending = false;
         this.openSnackBar('Error while adding customer', 'x');
       },
     );
@@ -144,6 +145,7 @@ export class CustomerNewComponent implements OnInit {
         this.openSnackBar('Customer is succesfully updated', 'x');
       },
       err => {
+        this.sending = false;
         this.openSnackBar('Error while updating customer', 'x');
       },
     );

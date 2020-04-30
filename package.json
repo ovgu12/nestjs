@@ -14,6 +14,7 @@
     "lint": "lerna run lint",
     "build": "lerna run build",
     "start": "node ./packages/backend/dist/main",
+    "start:dev": "lerna run start:dev",
     "serve": "lerna run start --scope frontend",
     "cleanup": "lerna clean --yes && rm -rf ./node_modules",
     "format": "lerna run format",

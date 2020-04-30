@@ -5,20 +5,16 @@ import { CustomerNewComponent } from './customer-new/customer-new.component';
 
 const routes: Routes = [
   {
-    path: 'customer',
+    path: '',
     component: CustomerListComponent,
   },
   {
-    path: 'customer/new',
+    path: 'new',
     component: CustomerNewComponent,
   },
   {
-    path: 'customer/edit/:customerId',
+    path: 'edit/:customerId',
     component: CustomerNewComponent,
-  },
-  {
-    path: '**',
-    component: CustomerListComponent,
   },
 ];
 

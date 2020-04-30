@@ -5,10 +5,13 @@ import {
   ViewChild,
   ElementRef,
 } from '@angular/core';
+
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
+
 import { CustomerNewComponent } from '../customer-new/customer-new.component';
 import { CustomerService } from '../customer.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+
 import {
   debounceTime,
   distinctUntilChanged,
@@ -96,10 +99,15 @@ export class CustomerListComponent implements OnInit, AfterViewInit {
   }
 
   deleteCustomer(customerId: string) {
-    this.customerService.delete(customerId).subscribe(res => {
-      this.resetSearch();
-      this.openSnackBar('Customer is succesfully deleted', 'x');
-    });
+    this.customerService.delete(customerId).subscribe(
+      res => {
+        this.resetSearch();
+        this.openSnackBar('Customer is succesfully deleted', 'x');
+      },
+      err => {
+        this.openSnackBar('Error while deleting customer', 'x');
+      },
+    );
   }
 
   addCustomer() {

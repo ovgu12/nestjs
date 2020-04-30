@@ -3,7 +3,7 @@
     <mat-form-field>
       <mat-label>First Name</mat-label>
       <input matInput [errorStateMatcher]="errorMatcher"  placeholder="John" formControlName="firstName">
-      <mat-error *ngIf="customerForm.get('firstName').errors && customerForm.get('firstName').errors.required">
+      <mat-error *ngIf="customerForm.get('firstName').hasError('required')">
         Field is <strong>required</strong>
       </mat-error>
     </mat-form-field>
@@ -11,7 +11,7 @@
     <mat-form-field>
       <mat-label>Last Name</mat-label>
       <input matInput [errorStateMatcher]="errorMatcher"  placeholder="Doe" formControlName="lastName">
-      <mat-error *ngIf="customerForm.get('lastName').errors && customerForm.get('lastName').errors.required">
+      <mat-error *ngIf="customerForm.get('lastName').hasError('required')">
         Field is <strong>required</strong>
       </mat-error>
     </mat-form-field>
@@ -19,13 +19,13 @@
     <mat-form-field>
       <mat-label>Email</mat-label>
       <input matInput [errorStateMatcher]="errorMatcher" placeholder="john.doe@example.com" formControlName="email">
-      <mat-error *ngIf="customerForm.get('email').errors && customerForm.get('email').errors.required">
+      <mat-error *ngIf="customerForm.get('email').hasError('required')">
         Email is <strong>required</strong>
       </mat-error>
-      <mat-error *ngIf="customerForm.get('email').errors && customerForm.get('email').errors.email">
+      <mat-error *ngIf="customerForm.get('email').hasError('email')">
         Email is <strong>not valid</strong>
       </mat-error>
-      <mat-error *ngIf="customerForm.get('email').errors && customerForm.get('email').errors.emailIsTaken">
+      <mat-error *ngIf="customerForm.get('email').hasError('emailIsTaken')">
         Email is <strong>taken</strong>
       </mat-error>
     </mat-form-field>
