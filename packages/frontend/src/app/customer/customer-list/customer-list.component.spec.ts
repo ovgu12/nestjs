@@ -1,13 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CustomerListComponent } from './customer-list.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 
-xdescribe('CustomerListComponent', () => {
+describe('CustomerListComponent', () => {
   let component: CustomerListComponent;
   let fixture: ComponentFixture<CustomerListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [RouterTestingModule, HttpClientModule],
       declarations: [CustomerListComponent],
     }).compileComponents();
   }));

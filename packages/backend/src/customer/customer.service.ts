@@ -87,7 +87,7 @@ export class CustomerService {
    */
   async deleteCustomer(customerId): Promise<any> {
     const deletedCustomer = await this.customerModel.deleteOne({
-      id: customerId,
+      _id: customerId,
     });
     return deletedCustomer;
   }

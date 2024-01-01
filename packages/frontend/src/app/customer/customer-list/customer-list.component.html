@@ -4,10 +4,10 @@
 
 <div class="customer-list__filter">
   <form [formGroup]="search">
-    <mat-form-field>
+    <mat-form-field appearance="outline">
       <mat-label>Search</mat-label>
       <input #searchInput matInput [errorStateMatcher]="errorMatcher" placeholder="John" formControlName="searchInput">
-      <button mat-button *ngIf="search.get('searchInput').value" 
+      <button mat-button *ngIf="search.get('searchInput').value"
               matSuffix mat-icon-button (click)="resetSearch()">
         <mat-icon>close</mat-icon>
       </button>
@@ -17,9 +17,9 @@
   </form>
 </div>
 
-<div class="customer-list__table">
+<div class="mat-elevation-z8 customer-list__table">
   <table mat-table [dataSource]="customers" class="mat-elevation-z8">
-  
+
     <!-- First Name Column -->
     <ng-container matColumnDef="firstName">
       <th mat-header-cell *matHeaderCellDef> First Name </th>
@@ -45,23 +45,21 @@
         <a mat-button [routerLink]="'edit/' + element._id">
           <mat-icon>create</mat-icon>
         </a>
-        <a mat-button (click)="deleteCustomer(element._id)">
+        <a [attr.aria-hidden]="true" mat-button (click)="deleteCustomer(element._id)" (keyup)="deleteCustomer(element._id)">
           <mat-icon>clear</mat-icon>
         </a>
       </td>
     </ng-container>
-  
+
     <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
   </table>
-  <mat-paginator [length]="customers.length"
-              [pageSize]="10"
-              [pageSizeOptions]="[5, 10, 25, 100]">
+  <mat-paginator *ngIf="customers.length > 0" [pageSizeOptions]="[5, 10, 25]">
   </mat-paginator>
   <mat-card *ngIf="isLoading">
     <mat-spinner diameter="36"></mat-spinner>
   </mat-card>
   <mat-card *ngIf="!isLoading && customers.length === 0">
-    No data found
+    <mat-card-content>No data found</mat-card-content>
   </mat-card>
 </div>

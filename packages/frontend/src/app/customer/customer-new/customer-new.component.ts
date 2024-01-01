@@ -43,8 +43,8 @@ export class CustomerNewComponent implements OnInit {
     private route: ActivatedRoute,
     private snackBar: MatSnackBar,
     public customerService: CustomerService,
-    @Optional() public dialogRef: MatDialogRef<any>,
-    @Optional() @Inject(MAT_DIALOG_DATA) public dialogData: any,
+    @Optional() public dialogRef: MatDialogRef<Element>,
+    @Optional() @Inject(MAT_DIALOG_DATA) public dialogData,
   ) {}
 
   ngOnInit(): void {
@@ -81,7 +81,7 @@ export class CustomerNewComponent implements OnInit {
     return !!this.dialogRef;
   }
 
-  closeDialog(res?: any) {
+  closeDialog(res) {
     if (this.isDialog()) {
       this.dialogRef.close(res);
     }
@@ -114,7 +114,7 @@ export class CustomerNewComponent implements OnInit {
         });
         this.loading = false;
       },
-      (err) => {
+      () => {
         this.openSnackBar('Error while loading customer data', 'x');
         this.router.navigate(['customers']);
       },
@@ -129,7 +129,7 @@ export class CustomerNewComponent implements OnInit {
         this.closeDialog(res);
         this.openSnackBar('Customer is succesfully added', 'x');
       },
-      (err) => {
+      () => {
         this.sending = false;
         this.openSnackBar('Error while adding customer', 'x');
       },
@@ -144,7 +144,7 @@ export class CustomerNewComponent implements OnInit {
         this.closeDialog(res);
         this.openSnackBar('Customer is succesfully updated', 'x');
       },
-      (err) => {
+      () => {
         this.sending = false;
         this.openSnackBar('Error while updating customer', 'x');
       },

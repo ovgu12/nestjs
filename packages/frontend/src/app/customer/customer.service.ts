@@ -28,16 +28,20 @@ export class CustomerService {
   }
 
   delete(customerId: string) {
-    return this.httpClient.delete<any>('/api/v1/customer/' + customerId);
+    return this.httpClient.delete<void>('/api/v1/customer/' + customerId);
   }
 
   search(query: string) {
     const params = { query };
-    return this.httpClient.get<any>('/api/v1/customer/search', { params });
+    return this.httpClient.get<Customer[]>('/api/v1/customer/search', {
+      params,
+    });
   }
 
   getByEmail(email: string) {
     const params = { email };
-    return this.httpClient.get<any>('/api/v1/customer/getByEmail', { params });
+    return this.httpClient.get<Customer>('/api/v1/customer/getByEmail', {
+      params,
+    });
   }
 }

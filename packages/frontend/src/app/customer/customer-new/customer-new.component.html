@@ -31,15 +31,11 @@
     </mat-form-field>
 
     <div class="customer-form__actions">
-      <button *ngIf="isDialog()" mat-raised-button (click)="closeDialog()" color="warn">Cancel</button>
+      <button *ngIf="isDialog()" mat-dialog-close  mat-raised-button color="warn">Cancel</button>
       <button (click)="onSubmit()" mat-raised-button color="primary" [disabled]="!customerForm.valid">
         <span *ngIf="isEditMode(); else createButtonText">Save</span>
         <ng-template #createButtonText><span>New</span></ng-template>
       </button>
     </div>
-
-    <button *ngIf="isDialog()" (click)="closeDialog()" mat-button class="customer-form__close">
-      <mat-icon>clear</mat-icon>
-    </button>
   </form>
 </div>

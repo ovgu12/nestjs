@@ -43,7 +43,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -68,7 +67,7 @@
           "options": {
             "browserTarget": "frontend:build",
             "proxyConfig": "proxy.conf.json"
-          },
+},
           "configurations": {
             "production": {
               "browserTarget": "frontend:build:production"
@@ -99,15 +98,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "tsconfig.app.json",
-              "tsconfig.spec.json",
-              "e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
             ]
           }
         },
@@ -126,8 +121,10 @@
       }
     }
   },
-  "defaultProject": "frontend",
   "cli": {
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ],
     "analytics": "6368c06b-9046-4cf8-88f3-0228517d7dc2"
   }
 }

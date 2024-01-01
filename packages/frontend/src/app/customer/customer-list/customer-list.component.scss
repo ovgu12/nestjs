@@ -1,6 +1,12 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
 .customer-list {
   &__table {
-    padding: .5rem;
 
     table {
       width: 100%;
@@ -33,16 +39,11 @@
       }
     }
   }
-  
-  &__toolbar {
-    padding: .5rem;
-  }
 
   &__filter {
-    padding: .5rem;
-
-    .mat-form-field {
+    .mat-mdc-form-field {
       width: 100%;
     }
   }
+
 }

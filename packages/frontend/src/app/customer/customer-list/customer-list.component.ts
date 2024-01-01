@@ -12,12 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CustomerNewComponent } from '../customer-new/customer-new.component';
 import { CustomerService } from '../customer.service';
 
-import {
-  debounceTime,
-  distinctUntilChanged,
-  switchMap,
-  map,
-} from 'rxjs/operators';
+import { debounceTime, switchMap, map, catchError } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AppErrorStateMatcher } from '../../common/app-error-state-matcher';
 import { of, fromEvent } from 'rxjs';
@@ -69,20 +64,18 @@ export class CustomerListComponent implements OnInit, AfterViewInit {
     fromEvent(this.searchInput.nativeElement, 'keyup')
       .pipe(
         debounceTime(500),
-        distinctUntilChanged(),
-        map((e: any) => e.target.value),
-        switchMap((val) => {
-          this.isLoading = true;
-          if (this.search.valid) {
-            if (val) {
-              return this.customerService.search(val);
-            } else {
-              return this.customerService.list();
-            }
-          } else {
-            return of(this.customers);
-          }
+        map((e: { target: { value: string } }) => {
+          return e.target.value;
         }),
+        switchMap((val) =>
+          this.search.valid
+            ? this.customerService.search(val).pipe(
+                catchError(() => {
+                  return of([]);
+                }),
+              )
+            : of([]),
+        ),
       )
       .subscribe((res) => {
         this.customers = res;
@@ -100,11 +93,11 @@ export class CustomerListComponent implements OnInit, AfterViewInit {
 
   deleteCustomer(customerId: string) {
     this.customerService.delete(customerId).subscribe(
-      (res) => {
+      () => {
         this.resetSearch();
         this.openSnackBar('Customer is succesfully deleted', 'x');
       },
-      (err) => {
+      () => {
         this.openSnackBar('Error while deleting customer', 'x');
       },
     );
