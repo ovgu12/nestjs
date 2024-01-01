@@ -71,7 +71,7 @@ export class CustomerListComponent implements OnInit, AfterViewInit {
         debounceTime(500),
         distinctUntilChanged(),
         map((e: any) => e.target.value),
-        switchMap(val => {
+        switchMap((val) => {
           this.isLoading = true;
           if (this.search.valid) {
             if (val) {
@@ -84,7 +84,7 @@ export class CustomerListComponent implements OnInit, AfterViewInit {
           }
         }),
       )
-      .subscribe(res => {
+      .subscribe((res) => {
         this.customers = res;
         this.isLoading = false;
       });
@@ -92,7 +92,7 @@ export class CustomerListComponent implements OnInit, AfterViewInit {
 
   listCustomers() {
     this.isLoading = true;
-    this.customerService.list().subscribe(res => {
+    this.customerService.list().subscribe((res) => {
       this.customers = res;
       this.isLoading = false;
     });
@@ -100,11 +100,11 @@ export class CustomerListComponent implements OnInit, AfterViewInit {
 
   deleteCustomer(customerId: string) {
     this.customerService.delete(customerId).subscribe(
-      res => {
+      (res) => {
         this.resetSearch();
         this.openSnackBar('Customer is succesfully deleted', 'x');
       },
-      err => {
+      (err) => {
         this.openSnackBar('Error while deleting customer', 'x');
       },
     );
@@ -115,7 +115,7 @@ export class CustomerListComponent implements OnInit, AfterViewInit {
       width: '60%',
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.resetSearch();
       }

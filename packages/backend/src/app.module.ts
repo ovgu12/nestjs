@@ -8,9 +8,7 @@ import { CustomerModule } from './customer/customer.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      'mongodb://root:a12345@ds231460.mlab.com:31460/sandbox',
-    ),
+    MongooseModule.forRoot('mongodb://root:example@localhost:27017/admin'),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '../../frontend/dist'),
     }),

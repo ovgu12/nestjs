@@ -105,7 +105,7 @@ export class CustomerNewComponent implements OnInit {
 
   getCustomer(customerId: string) {
     this.customerService.get(customerId).subscribe(
-      res => {
+      (res) => {
         this.customerForm.patchValue({
           _id: res._id,
           firstName: res.firstName,
@@ -114,7 +114,7 @@ export class CustomerNewComponent implements OnInit {
         });
         this.loading = false;
       },
-      err => {
+      (err) => {
         this.openSnackBar('Error while loading customer data', 'x');
         this.router.navigate(['customers']);
       },
@@ -124,12 +124,12 @@ export class CustomerNewComponent implements OnInit {
   addCustomer(cus: Customer) {
     this.sending = true;
     this.customerService.add(cus).subscribe(
-      res => {
+      (res) => {
         this.sending = false;
         this.closeDialog(res);
         this.openSnackBar('Customer is succesfully added', 'x');
       },
-      err => {
+      (err) => {
         this.sending = false;
         this.openSnackBar('Error while adding customer', 'x');
       },
@@ -139,12 +139,12 @@ export class CustomerNewComponent implements OnInit {
   updateCustomer(customerId: string, customer: Customer) {
     this.sending = true;
     this.customerService.update(customerId, customer).subscribe(
-      res => {
+      (res) => {
         this.sending = false;
         this.closeDialog(res);
         this.openSnackBar('Customer is succesfully updated', 'x');
       },
-      err => {
+      (err) => {
         this.sending = false;
         this.openSnackBar('Error while updating customer', 'x');
       },
@@ -157,8 +157,8 @@ export class CustomerNewComponent implements OnInit {
     return ctl.valueChanges.pipe(
       debounceTime(500),
       distinctUntilChanged(),
-      switchMap(val => this.customerService.getByEmail(val)),
-      map(res => {
+      switchMap((val) => this.customerService.getByEmail(val)),
+      map((res) => {
         // Found customer with the email
         if (res && res._id) {
           if (this.customerId !== res._id) {
