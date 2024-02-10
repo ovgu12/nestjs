@@ -8,7 +8,9 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "private": true,
   "workspaces": {
@@ -41,12 +43,14 @@
     "@angular/cli": "^17.0.8",
     "@angular/compiler-cli": "^17.0.8",
     "@angular/language-service": "^17.0.8",
+    "@cypress/schematic": "^2.5.1",
     "@types/jasmine": "^5.1.4",
     "@types/jasminewd2": "^2.0.13",
     "@types/node": "^20.10.6",
     "@typescript-eslint/eslint-plugin": "6.13.1",
     "@typescript-eslint/parser": "6.13.1",
     "codelyzer": "^6.0.2",
+    "cypress": "^13.6.4",
     "eslint": "^8.54.0",
     "jasmine-core": "^5.1.1",
     "jasmine-spec-reporter": "^7.0.0",

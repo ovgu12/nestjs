@@ -14,6 +14,7 @@
     "lint": "lerna run lint",
     "build": "lerna run build",
     "serve": "lerna run serve",
+    "e2e": "lerna run e2e",
     "format": "lerna run format"
   },
   "engines": {
