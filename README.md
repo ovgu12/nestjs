@@ -3,10 +3,11 @@
 From root folder
 
 - `yarn` to install packages
-- `yarn build` to build backend and frontend packages
-- `yarn test` to unit tests of all packages
-- `yarn e2e` to run e2e tests of all packages
-- `yarn serve` to serve backend http://localhost:8090 and frontend http://localhost:4200
+- `yarn serve` to serve all packages
+- `yarn build` to build packages
+- `yarn lint` to check linting of packages
+- `yarn test` to unit tests of packages
+- `yarn e2e` to run e2e tests of packages
 
 ## TODO
 

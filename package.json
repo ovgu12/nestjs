@@ -10,10 +10,10 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "lerna run test",
-    "lint": "lerna run lint",
-    "build": "lerna run build",
     "serve": "lerna run serve",
+    "build": "lerna run build",
+    "lint": "lerna run lint",
+    "test": "lerna run test",
     "e2e": "lerna run e2e",
     "format": "lerna run format"
   },
